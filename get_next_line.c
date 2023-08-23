@@ -6,39 +6,59 @@
 /*   By: aletorre <aletorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:05:00 by aletorre          #+#    #+#             */
-/*   Updated: 2023/08/18 14:01:01 by aletorre         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:51:22 by aletorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*get_rest(char *rest)
+char	*get_rest(char *rest)
 {
-	static char	*auxrest;
-	int			i;
-	int			j;
+	char	*auxrest;
+	int		i;
+	int		j;
+	int		restlength;
 
-	i = 1;
+	i = 0;
 	j = 0;
-	auxrest = (char *)malloc(sizeof(char *) * (BUFFER_SIZE + 1));
+	restlength = ft_strlen(rest);
 	if (rest)
 	{
 		if (ft_strchr(rest, '\n') && ft_strchr(rest, '\n')[1])
 		{
-			while (ft_strchr(rest, '\n')[i])
-				auxrest[j++] = ft_strchr(rest, '\n')[i++];
-			return ("\n");
-		}
-		else if (ft_strchr(rest, '\n') && ft_strchr(rest, '\n')[1] == '\0')
-		{
-			return ("\n");
+			auxrest = (char *)malloc(sizeof(char *) * (BUFFER_SIZE + 1));
+			if (restlength > ft_strlen(ft_strchr(rest, '\n')))
+			{
+				while (rest[i])
+				{
+					auxrest[i] = rest[i];
+					if (rest[i] == '\n')
+					{
+						i++;
+						break ;
+					}
+					i++;
+				}
+				while (rest[i])
+					rest[j++] = rest[i++];
+					rest[j] = '\0';
+				return (auxrest);
+			}
+			else
+			{
+				auxrest[0] = ft_strchr(rest, '\n')[0];
+				while (rest[i])
+				{
+					rest[i] = rest[i + 1];
+					i++;
+				}
+				return (auxrest);
+			}
 		}
 		else
-		{
 			return (rest);
-		}
 	}
-	return ("");
+	return (NULL);
 }
 
 char	*get_line(int fd, char *buffer, char *rest)
@@ -47,6 +67,7 @@ char	*get_line(int fd, char *buffer, char *rest)
 	int		i;
 	int		j;
 	char	*line;
+	char	*aux;
 
 	i = 0;
 	j = 1;
@@ -58,12 +79,15 @@ char	*get_line(int fd, char *buffer, char *rest)
 		buffer[bytes] = '\0';
 		line = ft_strjoin(line, buffer);
 	}
-	while (ft_strchr(line, '\n') && ft_strchr(line, '\n')[j])
-		rest[i++] = ft_strchr(line, '\n')[j++];
-	if (ft_strchr(line, '\n'))
-		//ft_strchr(line, '\n')[1] = '\0';
-		write(1, &ft_strchr(line, '\n')[1], 1);
-	rest[j] = '\0';
+	aux = ft_strchr(line, '\n');
+	while (aux && aux[j])
+		rest[i++] = aux[j++];
+	if (aux)
+		aux[1] = '\0';
+	if (j > 1)
+		rest[j] = '\0';
+	if (bytes == 0 && rest == NULL)
+		return (NULL);
 	return (line);
 }
 

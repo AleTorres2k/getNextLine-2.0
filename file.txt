@@ -1,7 +1,14 @@
 Hola, soy linea 1.
+Adios, soy 
 
-Adios, soy linea 2.
+linea 2.
 
-Pero, esta es la linea 3.
+Pero
+, esta es la li 
+nea 3.
 
-Y por ultimo, soy la linea 4.
+
+
+Y p
+or ultimo, soy 
+la linea 4.

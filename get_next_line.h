@@ -6,7 +6,7 @@
 /*   By: aletorre <aletorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:07:08 by aletorre          #+#    #+#             */
-/*   Updated: 2023/08/18 12:22:17 by aletorre         ###   ########.fr       */
+/*   Updated: 2023/08/22 12:59:28 by aletorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 7
+#  define BUFFER_SIZE 13
 # endif
 
 # include <fcntl.h> //Para utilizar O_RDONLY
@@ -25,5 +25,6 @@
 char	*get_next_line(int fd);
 char	*ft_strjoin(const char *str1, const char *str2);
 char	*ft_strchr(const char *s, int c);
+int		ft_strlen(char *str);
 
 #endif
